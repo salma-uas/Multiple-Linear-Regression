@@ -1,4 +1,3 @@
---------------Q1---------------------
   
   """ The data set cereals contains nutritional information for 77 breakfast ce
 reals. We are interested in estimating the nutritional rating given some of
@@ -7,38 +6,25 @@ the other variables, i.e. we are going to study a multiple linear regression
  explanatory variables.
 """
 
-#a
 cereals=read.csv(file="C:/Users/omme-/Desktop/DM_Excersize/Ex_5/cereals.dat",
 sep="")
 
-#b
 library(rgl)
 attach(cereals)
 plot(SUGARS,RATING)
 plot(FIBER,RATING)
 plot3d(SUGARS,FIBER,RATING)
-
---------------------------------------
-  #c
   
 model=lm(RATING~SUGARS)
 summary(model)
-
---------------------------------------
-  #d
   
 model=lm(RATING~FIBER)
 plot(FIBER,RATING)
 summary(model)
 abline(model)
---------------------------------------
-  #e
+
 model=lm(RATING~SUGARS+FIBER)
 summary(model)
-
-
----------------------------------------
----------------Q2----------------------
   
   """ we are still going to study the cereals data set. This time predictor variable 
 will be a categorical variable. In the regression modeling, we can use
@@ -49,12 +35,8 @@ variable indicates which supermarket shelf the particular cereal was
 located on (shelf 1, 2 or 3).
 """
 
-#a
 plot(RATING,SHELF)
 
-----------------------
-#b
-  
 dim(cereals)
 shelf1=seq(0,0,length.out=77)
 shelf2=seq(0,0,length.out=77)
@@ -67,14 +49,9 @@ shelf2[SHELF==1]=0
 shelf2[SHELF==2]=1
 shelf2[SHELF==3]=0
 
-----------------------------
-  #c
-  
 model=lm(RATING~SUGARS+FIBER+shelf1+shelf2)
 summary(model)
 
-----------------------------------
---------Q3------------------------
   """ The price of the cars, Price, in the data set Cars93 in the library MASS
 is going to be the dependent variable in this multiple regression analysis.
 One way to compare different multiple regression models is to use the so
@@ -82,8 +59,6 @@ called information criteria: AIC (Akaikes Information Criterion) or SBC
 (Schwarz-Bayes Information Criterion).  Also use Mallows Cp criterion to choose be
 tween different multiple regression models.
 """
-
-#b
 
 library(MASS)
 attach(Cars93)
@@ -93,18 +68,13 @@ sss=lm(Price~RPM +Horsepower+ Weight+ Passengers+ MPG.city+MPG.highway)
 summary(sss)
 names(sss)
 extractAIC(sss)
------------------------------------
-  #extra
 fitted.values(sss)
 Price
------------------------------------
-#c
-  #BIC value calculate
+
+#BIC value calculate
 n=nrow(Cars93)
 extractAIC(sss,k=log(n))
 
------------------
-  #e
 summa=summary(lm(Price~RPM))
 sig=summa$sigma
 extractAIC(sss,scale=sig*sig)[2]
@@ -119,18 +89,14 @@ extractAIC(sss,scale=sig*sig)[2]
 """
   
 #Backward selection
-
 myback=step(lm(Price~RPM+EngineSize+MPG.city+MPG.highway+Cylinders+
                  Horsepower+Weight+Passengers))
 
 #Stepwise selection
-
 mystep=step(lm(Price~RPM+EngineSize+MPG.city+MPG.highway+Cylinders+
                  Horsepower+Weight+Passengers),direction="both")
 
-
 #forward selection
-
 mymatrix=data.frame(RPM,EngineSize,MPG.city,MPG.highway,Cylinders,
                     Horsepower,Weight,Passengers)
 
